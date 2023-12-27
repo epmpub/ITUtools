@@ -1,0 +1,11 @@
+[
+    {
+        "name":"powershell7.4.0",
+        "command":"curl -s https://it2u.oss-cn-shenzhen.aliyuncs.com/utools/PowerShell-7.4.0-win-x64.msi -o pwsh7.msi && msiexec /i pwsh7.msi /quiet"
+    },
+    {
+        "name":"vector",
+        "command":"curl -s https://it2u.oss-cn-shenzhen.aliyuncs.com/utools/vector-0.34.0-x64.msi -o vector.msi && msiexec /i vector.msi /quiet"
+    }
+
+]

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]>      <html class="no-js"> <!--<![endif]-->
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>utools</title>
+    <meta name="description" content="utools是一个极简的IT工具,可以支持Windows、Linux、macOS.可以大大的简化终端设备维护工作量，减少重复工作，提升工作效率，为组织IT办公提供标准化、一致的、可迭代的办公环境">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <style>
+        section {
+            text-indent: 20px;
+        }
+
+        video {
+            width: 57vw;
+            margin: 0 auto;
+        }
+        .sunflower{
+            position:fixed;
+            right: 0px;
+            top: 0px;
+        }
+
+
+        blockquote {
+            padding: 10px;
+            box-shadow:
+                inset 0 -3em 3em rgba(0, 200, 0, 0.3),
+                0 0 0 2px tomato,
+                0.3em 0.3em 1em rgba(13, 0, 200, 0.733);
+        }
+
+        footer {
+                display: flex;
+                justify-content: center;
+                padding: 5px;
+                background-color: tomato;
+                color: #fff;
+                text-align: left;
+                line-height: 50px;
+
+        }
+        .wechat {
+            float: right;
+            width: 14vw;
+        }
+        h4 {
+            text-align: left;
+        }
+        h1 {
+            display: flex;
+            justify-content: left;
+            padding: 5px;
+            background-color:tomato;
+            opacity: 0.75;
+            color: #fff;
+
+        }
+        .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 50%;
+        }
+
+
+
+    </style>
+</head>
+
+<body>
+    <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="" async defer></script>
+
+    <div class="sunflower">
+        <img src="image/contact2.jpg" class="wechat">
+        <h4 class="center">扫码演示</h4>
+
+    </div>
+
+    <div class="container" style="background-color: #fff;">
+         <img src="image/logo.png" class="rounded">
+        <h2>UTOOLS</h2>
+
+        <nav class="navbar navbar-fixed-top navbar-expand-sm ">
+            <ul class="navbar-nav">
+                <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="#contact">contact</a></li>
+                <li class="nav-item"><a class="nav-link" href="#portfolio">Protfolio</a></li>
+                <li class="nav-item"><a class="nav-link" href="#service">Service</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+            </ul>
+        </nav>
+
+
+        <div class="fw-lighter font-monospace">
+            <blockquote class="fw-light">
+                <article>
+                    <h4>
+                        utools工具介绍：
+                    </h4>
+                    <section>
+                        <ul>
+                            <li >
+                                使用简单,无需学习;
+                            </li>
+                            <li >
+                                全面支持Windows，Linux，macOS
+                            </li>
+                            <li >
+                                简化工作，减少重复，提升工作效率
+                            </li>
+                            <li >
+                                不需要安装部署任何客户端
+                            </li>
+                            <li >
+                                高度定制自己的专门站点
+                            </li>
+                            <li >
+                                迭代快速,紧跟业务;
+                            </li>
+                            <li >
+                                Don't repeat yourself
+                            </li>
+                        </ul>
+
+                    </section>
+                    <section>
+                        <video src="vedio/utools1.mp4" autoplay muted controls loop></video>
+                        <p style="text-align: center;">使用视频：</p>
+
+                    </section>
+                </article>
+
+            </blockquote>
+        </div>
+
+        <blockquote>
+            <article>
+                <section class="fw-medium">
+                    <h4>第1种方法</h4>
+                    <h4 class="fw-light">(1) 按住win键+X, 点击 ‘windows powershell管理员’</h4>
+                    <img src="image/adminRun.png" class="img-fluid rounded-top rounded-bottom center">
+                    <h4 class="fw-light">(2) 输入：<strong>irm utools.run/win | iex</strong> </h4>
+                    <img src="image/irmiex.png" class="img-fluid rounded-top rounded-bottom center">
+                    <img src="image/utools.png" class="img-fluid rounded-top rounded-bottom center">
+                </section>
+        
+                <section>
+        
+                    <h4>第2种方法</h4>
+                    <h4 class="fw-light">(1) ctrl + shift + esc 快捷键开启任务管理器选择/文件, 点击/运行新任务</h4>
+        
+                    <img src="image/adminRunPWSH.png" class="img-fluid rounded-top rounded-bottom center">
+                    <h4 class="fw-light">(2) 输入 powershell ,勾选 "以系统管理权限创建此任务",确定</h4>
+        
+                    <img src="image/adminRunPWSH2.png" class="img-fluid rounded-top rounded-bottom center">
+        
+                    <h4 class="fw-light">(3) 启动后的powershell,将 irm utools.run/win | iex 复制粘贴到poershell窗口后,按回车.</h4>
+                    <img src="image/pwsh2.png" class="img-fluid rounded-top rounded-bottom center">
+        
+        
+                    <h4 class="fw-light">(4) 如有杀毒软件,如360,腾讯管家,金山毒霸等,请点击 "允许" </h4>
+        
+                    <img src="image/kingsoft_av.png" class="img-fluid rounded-top rounded-bottom center">
+                </section>
+            </article>
+        </blockquote>
+
+        <blockquote>
+            <details>
+                <summary class="fw-light">对应平台使用命令</summary>
+                <p>
+                  请按照对应平台，将命令复制、粘贴到终端后，回车运行。
+                </p>
+              </details>
+
+            <div class="container">
+                <div class="input-group mb-3">
+                    <button class="btn btn-outline-secondary w-25" type="button" id="button-addon1">windows</button>
+                    <input type="text" class="form-control" placeholder="" value="irm utools.run/win | iex">
+                </div>
+
+                <div class="input-group mb-3">
+                    <button class="btn btn-outline-secondary w-25" type="button" id="button-addon1">linux</button>
+                    <input type="text" class="form-control" placeholder="" value="curl -s utools.run/linux | dash">
+                </div>
+
+                <div class="input-group mb-3">
+                    <button class="btn btn-outline-secondary w-25" type="button" id="button-addon1">macOS</button>
+                    <input type="text" class="form-control" placeholder="" value="curl -s utools.run/mac | bash">
+                </div>
+
+        </blockquote>
+
+
+        <blockquote>
+            <footer>
+                <p class="ms-0">
+                    © 2019-2023 广州市佳友终端科技有限公司 TEL: 17180661988 网站：http://utools.run 地址：广州市天河区荷光路137号103房B1-109号
+                    <a class="hover" style="color: #fff;" href="https://beian.miit.gov.cn/">
+                        粤ICP备2023128495号-2
+                    </a>
+                </p>
+            </footer>
+        </blockquote>
+
+        </div>
+    </div>
+
+</body>
+
+</html>
