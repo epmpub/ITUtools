@@ -24,6 +24,7 @@ user:
     name: administrator
     method: RENAME
     newName: itadmin
+    commen: rename administrator to itadmin
 
 
 files:
