@@ -7,7 +7,7 @@ Install-Module -Name powershell-yaml  -ErrorAction SilentlyContinue -Force | Out
 $config = ConvertFrom-Yaml -Yaml (Invoke-RestMethod utools.run/config.yaml)
 
 
-function Get-File($file)
+function Get-File-Install($file)
 {
     # Prepare file store folder
     New-Item -ItemType Directory -Path $config.global.fileStore -ErrorAction SilentlyContinue | Out-Null
@@ -22,40 +22,54 @@ function NewLocalAdmin
 {
     [CmdletBinding()]
     param (
-        [string] $NewLocalAdmin,
+        [string] $UserName,
+        [string] $LocalGroup,
         [securestring] $Password
     )    
     begin {
     }    
     process {
-        New-LocalUser "$NewLocalAdmin" -Password $Password -FullName "$NewLocalAdmin" -Description "Temporary local admin" -ErrorAction SilentlyContinue
-        Write-Verbose "$NewLocalAdmin local user crated"
-        Add-LocalGroupMember -Group "Administrators" -Member "$NewLocalAdmin" -ErrorAction SilentlyContinue
-        Write-Verbose "$NewLocalAdmin added to the local administrator group"
+        New-LocalUser "$UserName" -Password $Password -FullName "$UserName" -Description "Temporary local admin" -ErrorAction SilentlyContinue
+        Write-Verbose "$UserName local user crated"
+        Add-LocalGroupMember -Group $LocalGroup -Member $UserName -ErrorAction SilentlyContinue
+        Write-Verbose "$UserName added to the local administrator group"
     }    
     end {
     }
 }
 
-$NewLocalAdmin = "Demo"
-$Secure_String_Pwd = ConvertTo-SecureString "Password!" -AsPlainText -Force
-NewLocalAdmin -NewLocalAdmin $NewLocalAdmin -Password $Secure_String_Pwd
-
-#Remove-LocalGroupMember -Group "Administrators" -Member Demo
-#Remove-LocalUser -Name Demo
-#Get-LocalUser
-#Get-LocalGroupMember Administrators
-
-
-
-
-
-
 foreach ($root in $config)
 {
-    foreach ($file in $root.files)
+    #Install software
+    #Remove-LocalGroupMember -Group "Administrators" -Member Demo
+    #Remove-LocalUser -Name Demo
+    #Get-LocalUser
+    #Get-LocalGroupMember Administrators
+
+    # Temporary comment
+    # foreach ($file in $root.files)
+    # {
+    #     Write-Host "processing --->" $file.name
+    #     Get-File-Install($file)
+    # }
+
+    # manipulate localusers
+    # add user
+    foreach ($user in $root.users.add)
     {
-        Write-Host "processing --->" $file.name
-        Get-File($file)
+        $Secure_String_Pwd = ConvertTo-SecureString $user.password -AsPlainText -Force
+        Write-Host -BackgroundColor Blue  $user.name + $user.group + $user.password
+        NewLocalAdmin -UserName $user.name -LocalGroup $user.group -Password $Secure_String_Pwd
+        # Add-LocalGroupMember -Group $user.group -Member $user.name -ErrorAction SilentlyContinue
+    }
+    # delete user
+    foreach ($user in $root.users.delete)
+    {
+        Remove-LocalUser -Name $user.name  -ErrorAction SilentlyContinue
+    }
+    # rename user
+    foreach ($user in $root.users.rename)
+    {
+        Rename-LocalUser -Name $user.name -NewName $user.newName -ErrorAction SilentlyContinue
     }
 }

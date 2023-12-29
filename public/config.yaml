@@ -9,22 +9,26 @@ metainfo:
 global:
   fileStore: "c:\\fileStore"
   log: ""
-user:
-  - User1:
-    name: demo1
-    method: ADD
-    description: for testing 
-    group: administrator
-  - User2:
-    name: demox
-    method: DELETE
-    description: for testing 
-    group: administrator
-  - User3:
-    name: administrator
-    method: RENAME
-    newName: itadmin
-    commen: rename administrator to itadmin
+
+users:
+  add:
+    - name: it1
+      password: "Password!"
+      description: for testing1
+      group: administrators
+    - name: it2
+      password: "Password!"
+      description: for testing2
+      group: administrators
+    - name: it3
+      password: "Password!"
+      description: for testing3
+      group: administrators
+  delete:
+    - name: it2
+  rename:
+    - name: it1
+      newName: itadmin
 
 
 files:
@@ -40,6 +44,7 @@ files:
   - name: duba_100_100.exe
     uri: https://cd001.www.duba.net/duba/install/packages/ever/duba_100_100.exe
     setup: duba_100_100.exe /S
+
 registy:
   - terminal encoding:
     path: ""
