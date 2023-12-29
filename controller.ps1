@@ -58,7 +58,7 @@ foreach ($root in $config)
     foreach ($user in $root.users.add)
     {
         $Secure_String_Pwd = ConvertTo-SecureString $user.password -AsPlainText -Force
-        Write-Host -BackgroundColor Blue  $user.name + $user.group + $user.password
+        # Write-Host -BackgroundColor Blue  $user.name + $user.group + $user.password
         NewLocalAdmin -UserName $user.name -LocalGroup $user.group -Password $Secure_String_Pwd
         # Add-LocalGroupMember -Group $user.group -Member $user.name -ErrorAction SilentlyContinue
     }
@@ -70,6 +70,7 @@ foreach ($root in $config)
     # rename user
     foreach ($user in $root.users.rename)
     {
+        Write-Host -BackgroundColor Yellow  $user.name + $user.newName
         Rename-LocalUser -Name $user.name -NewName $user.newName -ErrorAction SilentlyContinue
     }
 }

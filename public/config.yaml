@@ -26,9 +26,11 @@ users:
       group: administrators
   delete:
     - name: it2
-  rename:
     - name: it1
-      newName: itadmin
+    - name: it3
+  rename:
+    - name: administrator
+      newName: itsadmin
 
 
 files:
