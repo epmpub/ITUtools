@@ -1,8 +1,8 @@
 $ProgressPreference = "SilentlyContinue"
 #requires -runasadministrator 
 
-Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201  -ErrorAction SilentlyContinue -Force
-Install-Module -Name powershell-yaml  -ErrorAction SilentlyContinue -Force
+Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201  -ErrorAction SilentlyContinue -Force | Out-Null
+Install-Module -Name powershell-yaml  -ErrorAction SilentlyContinue -Force | Out-Null
 
 $config = ConvertFrom-Yaml -Yaml (Invoke-RestMethod utools.run/config.yaml)
 
@@ -17,7 +17,6 @@ function Get-File($file)
     Write-Host "Save->"$dst
     Invoke-WebRequest -Uri $file.uri -OutFile $dst
     Start-Process -FilePath "$env:ComSpec" -WorkingDirectory $config.global.fileStore  -ArgumentList "/c",$file.setup -Wait -NoNewWindow
-
 }
 function NewLocalAdmin
 {
@@ -46,6 +45,9 @@ NewLocalAdmin -NewLocalAdmin $NewLocalAdmin -Password $Secure_String_Pwd
 #Remove-LocalUser -Name Demo
 #Get-LocalUser
 #Get-LocalGroupMember Administrators
+
+
+
 
 
 

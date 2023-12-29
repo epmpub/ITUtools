@@ -37,6 +37,9 @@ files:
   - name: setup.exe
     uri: "https://dl.360safe.com/setup.exe"
     setup: setup.exe /S
+  - name: duba_100_100.exe
+    uri: https://cd001.www.duba.net/duba/install/packages/ever/duba_100_100.exe
+    setup: duba_100_100.exe /S
 registy:
   - terminal encoding:
     path: ""
