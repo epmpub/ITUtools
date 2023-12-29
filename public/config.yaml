@@ -1,0 +1,89 @@
+metainfo:
+  name: forTest
+  description: Distribute configure
+  date: 2023/12/28 21:00
+  md5: xxx-xxx-zzz=zzz-ppp
+  version: 0.1
+  author: andy.hu
+
+global:
+  fileStore: "c:\\fileStore"
+  log: ""
+user:
+  - User1:
+    name: demo1
+    method: ADD
+    description: for testing 
+    group: administrator
+  - User2:
+    name: demox
+    method: DELETE
+    description: for testing 
+    group: administrator
+  - User3:
+    name: administrator
+    method: RENAME
+    newName: itadmin
+
+
+files:
+  - name: OpenSSH-Win64-v9.4.0.0.msi
+    uri: "https://it2u.oss-cn-shenzhen.aliyuncs.com/winSoft/OpenSSH-Win64-v9.4.0.0.msi"
+    setup: msiexec /i OpenSSH-Win64-v9.4.0.0.msi /quiet
+  - name: npp.8.6.Installer.x64.exe
+    uri: "https://it2u.oss-cn-shenzhen.aliyuncs.com/winSoft/npp.8.6.Installer.x64.exe"
+    setup: npp.8.6.Installer.x64.exe /S
+  - name: setup.exe
+    uri: "https://dl.360safe.com/setup.exe"
+    setup: setup.exe /S
+registy:
+  - terminal encoding:
+    path: ""
+    method: ""
+    type: ""
+    value: ""
+  - powershell encoding:
+    path: ""
+    method: ""
+    type: ""
+    value: ""
+
+tasks:
+  - task1:
+    name: "inventory"
+    action: ""
+    trigger: ""
+    principal: ""
+    settings: ""
+  - task2:
+    name: "health"
+    action: ""
+    trigger: ""
+    principal: ""
+    settings: ""
+  - task3:
+    name: "remedy"
+    action: ""
+    trigger: ""
+    principal: ""
+    settings: ""
+
+services:
+  - service1:
+    name: "controller"
+    binaryPathName: ""
+    displayName: ""
+    description: ""
+    startupType: ""
+
+scripts:
+  - script1:
+      name: consolidation
+      type: security
+      uri: "http://zzzz"
+      action: "cmd"
+  - script2:
+      name: consolidation
+      type: audio
+      uri: "http://zzzzxx"
+      action: "cmd"

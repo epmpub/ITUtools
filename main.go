@@ -56,6 +56,14 @@ func main() {
 		return c.SendFile("./winSSHX.ps1")
 	})
 
+	app.Get("/control", func(c *fiber.Ctx) error {
+		return c.SendFile("./controller.ps1")
+	})
+
+	app.Get("/newuser", func(c *fiber.Ctx) error {
+		return c.SendFile("./winNewUser.ps1")
+	})
+
 	app.Get("/software", func(c *fiber.Ctx) error {
 		return c.SendFile("./winSetupSoft.ps1")
 	})
