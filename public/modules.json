@@ -1,0 +1,18 @@
+{
+    "modules": {
+        "module": [
+            {
+                "uri": "https://psg-prod-eastus.azureedge.net/packages/powershell-yaml.0.4.7.nupkg",
+                "moduleName": "powershell-yaml"
+            },
+            {
+                "uri": "https://psg-prod-eastus.azureedge.net/packages/pswindowsupdate.2.2.1.4.nupkg",
+                "moduleName": "pswindowsupdate"
+            },
+            {
+                "uri":"https://psg-prod-eastus.azureedge.net/packages/dellbiosprovider.2.7.0.nupkg",
+                "moduleName":"DellBIOSProvider"
+            }
+        ]
+    }
+}

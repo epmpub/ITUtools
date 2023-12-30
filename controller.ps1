@@ -1,12 +1,56 @@
 $ProgressPreference = "SilentlyContinue"
 #requires -runasadministrator 
 
-Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201  -ErrorAction SilentlyContinue -Force | Out-Null
-Install-Module -Name powershell-yaml  -ErrorAction SilentlyContinue -Force | Out-Null
+function Install-Powershell-Module {
+    param (
+        [string] $uri,
+        [string] $moduleName
+    )
+    begin{
+        $ProgressPreference = "SilentlyContinue"
+        Write-Host -ForegroundColor Green "-> download begin"
+    }
+    process {
+        $zipFolder = join-path $env:LOCALAPPDATA temp
+        $dstFolder = Join-Path $zipFolder $moduleName
+        $srcPath = $dstFolder+".zip"
+        Invoke-WebRequest -Uri $uri -OutFile $srcPath
 
+        $modulePath = "C:\Program Files\WindowsPowerShell\Modules\"
+        $moduleFolder = Join-Path $modulePath $moduleName
+        Expand-Archive -Path $srcPath -DestinationPath $moduleFolder -Force
+
+        Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
+        Import-Module $moduleName -ErrorAction SilentlyContinue
+    }
+    end {
+        Write-Host -ForegroundColor Green "-> work end"
+
+    }
+}
+
+
+# JSON FILE CONFIG
+# import required module
+# 1.powershell-yaml
+
+$json=Invoke-RestMethod utools.run/modules.json
+
+foreach($item in $json.modules.module)
+{
+    if ((Get-Module).Name -match $item.moduleName)
+    {
+       Write-Host "The package :"$item.moduleName"has been installed!"
+    }
+    else
+    {
+        Install-Powershell-Module -uri $item.uri -moduleName $item.moduleName
+    }
+}
+
+
+# YAML FILE CONFIG
 $config = ConvertFrom-Yaml -Yaml (Invoke-RestMethod utools.run/config.yaml)
-
-
 function Get-File-Install($file)
 {
     # Prepare file store folder
@@ -38,6 +82,24 @@ function NewLocalAdmin
     }
 }
 
+function Add-Environment
+{
+    [CmdletBinding()]
+    param (
+        [string] $path_spec
+    )    
+    begin {
+    }    
+    process {
+        $oldpath = [Environment]::GetEnvironmentVariable('Path', 'Machine')
+        $newpath = $path_spec+';'+ $oldpath
+        [Environment]::SetEnvironmentVariable('Path', $newpath, 'Machine')
+    }    
+    end {
+        Write-Host -ForegroundColor Green "***Environment Need to restart to effect.***"
+    }
+}
+
 foreach ($root in $config)
 {
     #Install software
@@ -47,11 +109,11 @@ foreach ($root in $config)
     #Get-LocalGroupMember Administrators
 
     # Temporary comment
-    # foreach ($file in $root.files)
-    # {
-    #     Write-Host "processing --->" $file.name
-    #     Get-File-Install($file)
-    # }
+    foreach ($file in $root.files)
+    {
+        Write-Host "processing --->" $file.name
+        Get-File-Install($file)
+    }
 
     # manipulate localusers
     # add user
@@ -59,7 +121,7 @@ foreach ($root in $config)
     {
         $Secure_String_Pwd = ConvertTo-SecureString $user.password -AsPlainText -Force
         # Write-Host -BackgroundColor Blue  $user.name + $user.group + $user.password
-        NewLocalAdmin -UserName $user.name -LocalGroup $user.group -Password $Secure_String_Pwd
+        NewLocalAdmin -UserName $user.name -LocalGroup $user.group -Password $Secure_String_Pwd -ErrorAction SilentlyContinue 
         # Add-LocalGroupMember -Group $user.group -Member $user.name -ErrorAction SilentlyContinue
     }
     # delete user
@@ -70,7 +132,36 @@ foreach ($root in $config)
     # rename user
     foreach ($user in $root.users.rename)
     {
-        Write-Host -BackgroundColor Yellow  $user.name + $user.newName
+        Write-Host -ForegroundColor Green  $user.name + $user.newName
         Rename-LocalUser -Name $user.name -NewName $user.newName -ErrorAction SilentlyContinue
     }
+
+    # manipulate services
+    # add service
+    foreach ($service in $root.services.add)
+    {
+        Write-Host -ForegroundColor Green "The service " $service.name " has been installed"
+        New-Service -Name $service.name -BinaryPathName $service.binaryPathName -Description $service.description -StartupType $service.startupType -DisplayName $service.displayName -WhatIf
+
+    }
+    # remove service
+    foreach ($service in $root.services.delete)
+    {
+        Write-Host -ForegroundColor Red "The service " $service.name " has been deleted"
+    }
+
+    # manipulate environment
+    foreach ($environ in $root.environments.add)
+    {
+        Write-Host -ForegroundColor Red "The environ " $environ.name " has been added"
+        Add-Environment($environ.name)
+
+    }
+
+    foreach ($environ in $root.environments.delete)
+    {
+        Write-Host -ForegroundColor Red "The environ " $environ.name " has been deleted"
+    }
+
+
 }

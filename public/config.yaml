@@ -32,6 +32,17 @@ users:
     - name: administrator
       newName: itsadmin
 
+# Add path to $PATH
+environments:
+  add:
+    - name: 'C:\Program Files\Vector\bin'
+    - name: 'C:\fileStore'
+  delete:
+    - name: 'BAZ'
+
+
+
+
 
 files:
   - name: OpenSSH-Win64-v9.4.0.0.msi
@@ -40,12 +51,9 @@ files:
   - name: npp.8.6.Installer.x64.exe
     uri: "https://it2u.oss-cn-shenzhen.aliyuncs.com/winSoft/npp.8.6.Installer.x64.exe"
     setup: npp.8.6.Installer.x64.exe /S
-  - name: setup.exe
-    uri: "https://dl.360safe.com/setup.exe"
-    setup: setup.exe /S
-  - name: duba_100_100.exe
-    uri: https://cd001.www.duba.net/duba/install/packages/ever/duba_100_100.exe
-    setup: duba_100_100.exe /S
+  - name: vector-0.34.0-x64.msi
+    uri: "https://it2u.oss-cn-shenzhen.aliyuncs.com/utools/vector-0.34.0-x64.msi"
+    setup: msiexec /i vector-0.34.0-x64.msi /quiet
 
 registy:
   - terminal encoding:
@@ -80,12 +88,32 @@ tasks:
     settings: ""
 
 services:
-  - service1:
-    name: "controller"
+  add:
+  - service:
+    name: "CheckStatus"
     binaryPathName: ""
     displayName: ""
     description: ""
     startupType: ""
+  - service:
+    name: "CheckHealth"
+    binaryPathName: ""
+    displayName: ""
+    description: ""
+    startupType: ""
+  - service:
+    name: "MonitorPerformance"
+    binaryPathName: ""
+    displayName: ""
+    description: ""
+    startupType: ""
+  delete:
+  - service:
+    name: "foo"
+  - service:
+    name: "bar"
+  - service:
+    name: "baz"  
 
 scripts:
   - script1:
