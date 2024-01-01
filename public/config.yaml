@@ -37,12 +37,10 @@ environments:
   add:
     - name: 'C:\Program Files\Vector\bin'
     - name: 'C:\fileStore'
+    - name: "c:\\python311"
+    - name: "C:\\python311\\Scripts"
   delete:
     - name: 'BAZ'
-
-
-
-
 
 files:
   - name: OpenSSH-Win64-v9.4.0.0.msi
@@ -54,6 +52,21 @@ files:
   - name: vector-0.34.0-x64.msi
     uri: "https://it2u.oss-cn-shenzhen.aliyuncs.com/utools/vector-0.34.0-x64.msi"
     setup: msiexec /i vector-0.34.0-x64.msi /quiet
+  - name: Everything-1.4.1.1024.x64-Setup.exe
+    uri: "https://it2u.oss-cn-shenzhen.aliyuncs.com/utools/Everything-1.4.1.1024.x64-Setup.exe"
+    setup: Everything-1.4.1.1024.x64-Setup.exe /S
+  # - name: googlechromestandaloneenterprise64.msi
+  #   uri: "http://192.168.2.1/download/googlechromestandaloneenterprise64.msi"
+  #   setup: msiexec /i googlechromestandaloneenterprise64.msi /quiet
+  - name: 7z2301-x64.msi
+    uri: "http://192.168.2.1/software/7z2301-x64.msi"
+    setup: msiexec /i 7z2301-x64.msi /quiet
+  - name: python-3.11.6-amd64.exe
+    uri: "http://192.168.2.1/software/python-3.11.6-amd64.exe"
+    setup: python-3.11.6-amd64.exe /quiet TargetDir="c:\python311" InstallAllUsers=1 Include_lib=1 Include_pip=1 Include_pip=1
+  - name: flaskApp.py
+    uri: "https://it2u.oss-cn-shenzhen.aliyuncs.com/scripts/flaskApp.py"
+    setup:
 
 registy:
   - terminal encoding:
@@ -116,13 +129,38 @@ services:
     name: "baz"  
 
 scripts:
+  powershell:
   - script1:
-      name: consolidation
-      type: security
-      uri: "http://zzzz"
-      action: "cmd"
-  - script2:
-      name: consolidation
-      type: audio
-      uri: "http://zzzzxx"
-      action: "cmd"
+    name: test.ps1
+    uri: "https://it2u.oss-cn-shenzhen.aliyuncs.com/scripts/test.ps1"
+  bat:
+  - script1:
+    name: test.bat
+    uri: "https://it2u.oss-cn-shenzhen.aliyuncs.com/scripts/test.bat"
+  python:
+  - script1:
+    name: test.py
+    uri: "https://it2u.oss-cn-shenzhen.aliyuncs.com/scripts/test.py"  
+
+shell:
+  cmd:
+  - id1:
+    name: deploy flask
+    commandLine: C:\python311\Scripts\pip.exe install flask
+  - id2:
+    name: deploy gunicorn
+    commandLine: C:\python311\Scripts\pip.exe install gunicorn
+  - id3:
+    name: deploy waitress
+    commandLine: C:\python311\Scripts\pip.exe install waitress
+  - id4:
+    name: start waitress
+    commandLine: C:\python311\Scripts\waitress-serve.exe flaskApp:app
+
+  powershell:
+  - id1:
+    name: "Powershell command test 1"
+    commandLine: "Get-Process -Name System"
+  - id2:
+    name: "Powershell command test 2"
+    commandLine: "Get-Process -Name svchost | select -First 3"

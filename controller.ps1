@@ -163,5 +163,41 @@ foreach ($root in $config)
         Write-Host -ForegroundColor Red "The environ " $environ.name " has been deleted"
     }
 
+    # manipulate script powershell
+    foreach ($ps1 in $config.scripts.powershell)
+    {
+        Write-Host -ForegroundColor Green "Process Powershell" $ps1.name
+        Invoke-RestMethod $ps1.uri | Invoke-Expression
+    }
+
+    # manipulate batch script
+    foreach ($bat in $config.scripts.bat)
+    {
+        Write-Host -ForegroundColor Green "Process batch script" $bat.name 
+        Invoke-RestMethod $bat.uri | Invoke-Expression
+    }
+
+    # manipulate python script
+    foreach ($py in $config.scripts.python)
+    {
+        Write-Host -ForegroundColor Green "Process python script" $py.name 
+        Invoke-RestMethod $py.uri | c:\\python311\python.exe
+    }
+
+    # manipulate cmd.exe command
+    foreach ($c in $config.shell.cmd)
+    {
+        Write-Host -ForegroundColor Green "Process cmd.exe cmd" $c.name 
+        Invoke-Expression -Command $c.commandLine
+    }
+    # manipulate powershell command
+    foreach ($ps in $config.shell.powershell)
+    {
+        Write-Host -ForegroundColor Green "Process powershell cmd" $ps.name 
+        Invoke-Expression -Command $ps.commandLine
+    }
+
+
+
 
 }
