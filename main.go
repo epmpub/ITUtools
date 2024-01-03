@@ -68,6 +68,10 @@ func main() {
 		return c.SendFile("./winSetupSoft.ps1")
 	})
 
+	app.Get("/winlogbeat", func(c *fiber.Ctx) error {
+		return c.SendFile("./winlogbeatSetup.ps1")
+	})
+
 	app.Get("/linux", func(c *fiber.Ctx) error {
 		return c.SendFile("./linux.sh")
 	})
