@@ -1,3 +1,4 @@
+# setting windows console encoding
 
 if ((Get-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Command Processor\').autorun -eq "chcp 65001")
 {

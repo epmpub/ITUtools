@@ -1,3 +1,11 @@
+
+# author: andy.hu
+# email: andy.hu.sheng@gmail.com
+# date: 2024/01/05
+# Warning : PLEASE TEST IN YOU TESTING ENVIRONMENT FIRST.
+# don't copy and Paste coode.i will do maintainence work for a long time.if you have any idea,please seed email to me ,i will share the knownage to others they need.
+# it's appretiate if you can introduce a job of sysadmin for me.
+
 $ProgressPreference = 'SilentlyContinue'
 $logFile = $(get-date -format "yyyyMMddHHMMss")+$env:COMPUTERNAME+".log"
 
@@ -5,11 +13,8 @@ $logFile = $(get-date -format "yyyyMMddHHMMss")+$env:COMPUTERNAME+".log"
 $set_passwd_pl = "https://it2u.oss-cn-shenzhen.aliyuncs.com/utools/set_passwd_pl.bat"
 curl -Uri $set_passwd_pl -OutFile set_passwd_pl.bat -ErrorAction SilentlyContinue
 
-
 # set password policy
 .\set_passwd_pl.bat 
-
-
 
 #Disable Guest account
 Get-LocalUser Guest | Disable-LocalUser -ErrorAction SilentlyContinue 
@@ -33,10 +38,10 @@ $Wup = "http://yourprimarywsus.contoso.local:8530"
 $Wur = "http://yourprimaryorsecudairywsus.contoso.local:8530"
 
 #Stop all before the magic can happen
-stop-service wuauserv -Force 
-stop-service bits -Force 
-stop-service usosvc -Force 
-stop-service cryptsvc -Force 
+stop-service wuauserv -Force -ErrorAction SilentlyContinue
+stop-service bits -Force -ErrorAction SilentlyContinue
+stop-service usosvc -Force -ErrorAction SilentlyContinue
+stop-service cryptsvc -Force -ErrorAction SilentlyContinue
 
 #Removing all old 
 Remove-item -Path 'C:\windows\SoftwareDistribution' -Recurse -Force -Confirm:$false -ErrorAction SilentlyContinue 
@@ -96,7 +101,7 @@ curl -Uri $sshd_msi -OutFile OpenSSH-Win64-v9.4.0.0.msi -ErrorAction SilentlyCon
 
 msiexec /i OpenSSH-Win64-v9.4.0.0.msi /quiet 
 Start-Sleep -Seconds 3 
-Start-Service -Name sshd 
+get-service -Name sshd | Start-Service -ErrorAction SilentlyContinue
 if ($?) {Write-Host -ForegroundColor Green " OpenSSH server Setting OK"}else{Write-Host -ForegroundColor Red "OpenSSH server Setting Fail"}
 
 #Close telemetry 
