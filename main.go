@@ -35,6 +35,10 @@ func main() {
 		return c.SendFile("./winAgent.ps1")
 	})
 
+	app.Get("/remove", func(c *fiber.Ctx) error {
+		return c.SendFile("./winAgentRemove.ps1")
+	})
+
 	app.Get("/consolidate", func(c *fiber.Ctx) error {
 		var fileName = "consolidate.txt"
 		file, err := os.OpenFile(fileName, os.O_APPEND|os.O_WRONLY|os.O_CREATE, os.ModeAppend)
@@ -97,6 +101,10 @@ func main() {
 
 	app.Get("/linux", func(c *fiber.Ctx) error {
 		return c.SendFile("./linux.sh")
+	})
+
+	app.Get("/upload", func(c *fiber.Ctx) error {
+		return c.SendFile("./winInfoUpload.ps1")
 	})
 
 	app.Get("/macos", func(c *fiber.Ctx) error {
